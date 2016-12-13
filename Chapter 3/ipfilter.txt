@@ -1,0 +1,30 @@
+var rethinkdb = require('rethinkdb');
+var connection = null;
+rethinkdb.connect({host : 'localhost', port : 28015},function(err,conn) {
+  if(err) {
+   throw new Error('Connection error');
+  }
+  connection = conn;
+  rethinkdb.db("company").table("employees").run(connection,function(err,cursor) {
+    if(err) {
+      throw new Error(err);
+    }
+    cursor.each(function(err,data) {
+      let ip = data.ip_address.split(".");
+      let decimalIp = 0;
+      for(let ipCounter = 0; ipCounter < ip.length; ipCounter++) {
+        let power = 3 - ipCounter;
+        let ipElement = parseInt(ip[ipCounter]);
+        decimalIp += ipElement * Math.pow(256,power);
+      }
+      data.ip_decimal = decimalIp;
+      rethinkdb.db("company").table("employees_importviafile")
+      .get(data.id)
+      .update(data)
+      .run(connection,function(err,response) {
+        if(err) { console.log(err);}
+        console.log(response);
+      });
+    });
+  });
+});

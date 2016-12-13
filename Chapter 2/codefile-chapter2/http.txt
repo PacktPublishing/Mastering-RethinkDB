@@ -1,0 +1,17 @@
+var rethinkdb = require('rethinkdb');
+var connection = null;
+rethinkdb.connect({host : 'localhost', port : 28015},function(err,conn) {
+ if(err) {
+   throw new Error('Connection error');
+ } else {
+  connection = conn;
+  rethinkdb.table("movies").insert(
+    rethinkdb.http("http://www.omdbapi.com/?t=avengers&y=2015&plot=short&r=json")
+  ).run(connection,function(err,data) {
+    if(err) {
+      throw new Error(err);
+    }
+    console.log(data);
+  });
+ }
+});

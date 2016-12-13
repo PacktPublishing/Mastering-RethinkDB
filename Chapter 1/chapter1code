@@ -1,0 +1,40 @@
+// All queries are executed via web adminstrative console of rethinkDB.
+// get all chapters from the table
+
+r.db("book").table("chapters").run()
+
+// get chapters written by particular author
+
+r.db("book").table("chapters").get(‘7644aaf2-9928-4231-aa68-4e65e31bf219’).run()
+
+// performing JOIN
+
+r.db("books").table("chapters").
+  filter({"author_id": "abc768332"}).
+run()
+
+// Inserting data in table
+
+r.db('books').table('chapters').insert({
+   author_id : "521b92b1-0d83-483d-a374-b94a400cf699",
+   chapterName : "Chapter 1"
+})
+
+r.db('books').table('chapters').insert({
+   author_id : "521b92b1-0d83-483d-a374-b94a400cf699",
+   chapterName : "Chapter 2"
+})
+
+// performing EQJOIN
+
+r.db('books').table('chapters').eqJoin("author_id",r.db('books').table('authors'))
+
+// zipping the data
+
+r.db('books').table('chapters').eqJoin("author_id",r.db('books').table('authors')).zip()
+
+// performing outer join
+
+r.db('books').table('chapters').outerJoin(r.db('books').table('authors'),function(chapters,authors) {
+  return authors
+}).zip()

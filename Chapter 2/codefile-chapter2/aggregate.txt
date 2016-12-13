@@ -1,0 +1,45 @@
+var rethinkdb = require('rethinkdb');
+var connection = null;
+rethinkdb.connect({host : 'localhost', port : 28015},function(err,conn) {
+ if(err) {
+   throw new Error('Connection error');
+ } else {
+  connection = conn;
+  rethinkdb.expr(2).add(2).run(connection,function(err,result) {
+    if(err) {
+      throw new Error(err);
+    }
+    console.log(result);
+  });
+
+  rethinkdb.table("users").get('f6f1f0ce-32dd-4bc6-885d-97fe07310845')("name").upcase().run(connection,function(err,result) {
+    if(err) {
+      throw new Error(err);
+    }
+    console.log(result);
+  });
+
+
+  rethinkdb.table("users").filter(function(user) {
+    return user("age").lt(30).and(user("name").eq("John"))
+  }).run(connection,function(err,cursor) {
+    if(err) {
+      throw new Error(err);
+    }
+    cursor.toArray(function(err,data) {
+      console.log(data);
+    })
+  });
+
+  rethinkdb.table("users").filter(function(user) {
+    return user("name").upcase();
+  }).run(connection,function(err,cursor) {
+    if(err) {
+      throw new Error(err);
+    }
+    cursor.toArray(function(err,data) {
+      console.log(data);
+    });
+  });
+ }
+});

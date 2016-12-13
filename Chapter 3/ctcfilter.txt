@@ -1,0 +1,26 @@
+var rethinkdb = require('rethinkdb');
+var connection = null;
+rethinkdb.connect({host : 'localhost', port : 28015},function(err,conn) {
+ if(err) {
+   throw new Error('Connection error');
+ }
+  connection = conn;
+  rethinkdb.db("company").table("employees")
+  .run(connection,function(err,cursor) {
+      if(err) {
+        throw new Error(err);
+      }
+      cursor.each(function(err,data) {
+        data.ctc = parseInt(data.ctc.split("$")[1]);
+        rethinkdb.db("company").table("employees")
+        .get(data.id)
+        .update({ctc : data.ctc})
+        .run(connection,function(err,response) {
+          if(err) {
+            throw new Error(err);
+          }
+          console.log(response);
+        });
+      });
+    });
+});

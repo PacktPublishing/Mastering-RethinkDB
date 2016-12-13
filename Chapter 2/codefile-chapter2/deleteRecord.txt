@@ -1,0 +1,17 @@
+var rethinkdb = require('rethinkdb');
+var connection = null;
+rethinkdb.connect({host : 'localhost', port : 28015},function(err,conn) {
+ if(err) {
+   throw new Error('Connection error');
+ } else {
+  connection = conn;
+  rethinkdb.table('users')
+    .delete()
+    .run(connection,function(err,response) {
+      if(err) {
+        throw new Error(err);
+      }
+      console.log(response);
+    });
+ }
+});
