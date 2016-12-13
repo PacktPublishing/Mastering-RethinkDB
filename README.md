@@ -21,3 +21,13 @@ The code will look like the following:
 | Chapter number | Software required (With version) | Hardware specifications | OS required |
 |:--------------:|:--------------------------------:|:-----------------------:|:-----------:|
 | 1-9 | RethinkDB 2.3 Node.js 6+ Python 3 Postman (Recommended) Chrome latest | PC or Mac. The host machine should have at least:2.2 GHz Intel Core i5 processor or AMD equivalent (the more cores, the better) 4GB of RAM. The higher, the better. | PC with Linux or Windows 7 64 Bit or higher. Mac with OS X 10.9 or higher. (Mesos doesn't run in Windows) |
+
+## Related Products:
+* [Getting Started with RethinkDB](https://www.packtpub.com/big-data-and-business-intelligence/getting-started-rethinkdb?utm_source=github&utm_medium=repository&utm_content=9781785887604)
+
+* [Mastering F#](https://www.packtpub.com/application-development/mastering-f?utm_source=github&utm_medium=repository&utm_content=9781784393434)
+
+* [Mastering Unity 2D Game Development - Second Edition](https://www.packtpub.com/game-development/mastering-unity-2d-game-development-second-edition?utm_source=github&utm_medium=repository&utm_content=9781786463456)
+
+###Suggestions and Feedback
+[Click here](https://docs.google.com/forms/d/e/1FAIpQLSe5qwunkGf6PUvzPirPDtuy1Du5Rlzew23UBp2S-P3wB-GcwQ/viewform) if you have any feedback or suggestions.
